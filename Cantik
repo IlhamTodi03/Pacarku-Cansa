@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun ke-21, Cansa!</title>
+    <!-- Memuat Tailwind CSS untuk styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Memuat Google Fonts untuk tampilan yang lebih manis -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Menambahkan font custom ke dalam class tailwind */
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        /* Efek animasi fade-in sederhana */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0; /* Mulai dari transparan */
+        }
+        /* Loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #db2777; /* Warna pink */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Styling untuk layar pembuka */
+        #welcome-overlay {
+            background: linear-gradient(rgba(255, 192, 203, 0.8), rgba(251, 231, 239, 0.9)), url('https://placehold.co/1920x1080/fbcfe8/9d174d?text=+)');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Delay animasi untuk setiap elemen */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1s; }
+        .delay-6 { animation-delay: 1.2s; }
+        .delay-7 { animation-delay: 1.4s; }
+    </style>
+</head>
+<body class="bg-pink-50 font-poppins text-gray-800">
+
+    <!-- Layar Pembuka (Overlay) -->
+    <div id="welcome-overlay" class="fixed inset-0 z-50 flex flex-col justify-center items-center text-center p-4 transition-opacity duration-1000">
+        <h2 class="text-4xl md:text-6xl text-white font-pacifico drop-shadow-lg">Hai, Sayangku...</h2>
+        <p class="text-white text-lg md:text-2xl mt-4 max-w-2xl drop-shadow-md">Ada sesuatu yang spesial buat kamu di hari yang paling spesial ini.</p>
+        <button id="start-button" class="mt-12 bg-white text-pink-500 font-bold text-lg py-4 px-8 rounded-full shadow-2xl transform hover:scale-110 transition-transform duration-300">
+            Peyuk eh Klik dulu yaaa... ❤️
+        </button>
+    </div>
+
+    <!-- Kontainer utama, awalnya disembunyikan -->
+    <div id="main-content" class="hidden">
+        <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+            <!-- Header Utama -->
+            <header class="text-center py-12 fade-in">
+                <h1 class="text-4xl md:text-6xl font-bold text-pink-500 font-pacifico">Happy 21st Birthday</h1>
+                <h2 class="text-3xl md:text-5xl font-bold text-pink-400 mt-2">Rifa Cansa Larasati</h2>
+                <p class="mt-6 text-lg md:text-xl text-gray-600">Untuk Cansa, yang selalu bikin hari-hariku lebih indah 💖</p>
+            </header>
+
+            <!-- Foto Utama -->
+            <div class="my-8 text-center fade-in delay-1">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczPaJ40_MMP5LtjzTzFhqpyXCckPE9ncTJEPpmgR-7byAYub8DWQdgvC4Hf66CZ4oYlkYopMg7yXnVzy2_9HoJaznDUHmlYL_J8uH7uR9MAlkZOi9NxJY7mYBDORdFLg2MmCP1RovNEV0bNVFlSQ5k8ThA=w1198-h674-s-no-gm?authuser=0" 
+                     alt="Foto Rifa Cansa Larasati" 
+                     class="mx-auto rounded-2xl shadow-xl w-full max-w-lg object-cover">
+            </div>
+
+            <!-- Lagu Untukmu -->
+            <section class="my-16 p-8 bg-white rounded-2xl shadow-lg fade-in delay-2">
+                <h3 class="text-3xl font-bold text-center text-pink-500 mb-6 font-pacifico">Lagu Spesial Untukmu</h3>
+                <p class="text-center text-gray-600 mb-4">Lagu ini mewakili semua perasaanku. Kamu adalah penjaga hatiku.</p>
+                <div id="player" class="relative overflow-hidden rounded-lg shadow-md" style="padding-top: 56.25%;"></div>
+            </section>
+
+            <!-- Tentang Dia -->
+            <section class="my-16 p-8 bg-rose-100 rounded-2xl shadow-lg fade-in delay-3">
+                <h3 class="text-3xl font-bold text-center text-pink-600 mb-6 font-pacifico">Gadis Spesialku</h3>
+                <p class="text-lg text-center text-gray-700 leading-relaxed">
+                    Untuk pacar terbaikku, sahabat terdekatku, dan orang paling sabar yang pernah Tuhan kirimkan untukku. Di hari ulang tahunmu yang ke-21 ini, aku mau bilang kalau kamu adalah hal terbaik yang pernah terjadi di hidupku.
+                    <br><br>
+                    Kamu itu paket lengkap yang unik. Kamu bisa manja dan ngambekan, tapi justru itu yang bikin aku gemas dan ingin selalu ada di dekatmu. Di sisi lain, kamu sering overthinking memikirkan banyak hal, tapi itu semua karena kamu peduli. Dan di atas segalanya, kamu adalah orang yang paling pengertian. Terima kasih sudah menjadi dirimu sendiri, Cansa.
+                </p>
+            </section>
+
+            <!-- Kisah Kita -->
+            <section class="my-16 p-8 bg-white rounded-2xl shadow-lg fade-in delay-4">
+                <h3 class="text-3xl font-bold text-center text-pink-500 mb-6 font-pacifico">Awal Kisah Kita</h3>
+                <p class="text-lg text-center text-gray-700 leading-relaxed">
+                    Rasanya baru kemarin kita pertama kali ketemu di Ragunan. Aku masih ingat jelas canggungnya suasana, tapi ada getaran aneh yang bikin aku penasaran sama kamu. Siapa sangka, pertemuan sederhana itu menjadi awal dari cerita kita.
+                </p>
+                <p class="text-lg leading-relaxed mt-4 font-bold">
+                    Lalu, kencan pertama kita di Blok M. Momen itu benar-benar mengunci hatiku. Caramu tertawa, caramu bercerita, semuanya terasa pas. Hari itu, aku pulang dengan senyum yang tidak bisa hilang, dan aku tahu... aku sudah jatuh cinta padamu.
+                </p>
+            </section>
+
+            <!-- Fitur Gemini AI -->
+            <section class="my-16 p-8 bg-rose-100 rounded-2xl shadow-lg fade-in delay-5">
+                <h3 class="text-3xl font-bold text-center text-pink-600 mb-6 font-pacifico">Puisi Kejutan Untukmu</h3>
+                <p class="text-center text-gray-700 mb-6">aku butuh bantuan kamu nih untuk merangkai kata-kata indahnya ilham, spesial untukmu di hari ini. Klik tombol di bawah ini ya sayangku!</p>
+                <div class="text-center">
+                    <button id="gemini-button" onclick="generatePoem()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full transition duration-300 shadow-lg">
+                        Klik Untuk Puisi Kejutan!
+                    </button>
+                </div>
+                <div id="poem-container" class="mt-8">
+                     <div id="loader" class="hidden loader"></div>
+                     <div id="poem-output" class="text-center text-gray-700 whitespace-pre-wrap leading-loose bg-white p-6 rounded-lg shadow-inner" style="min-height: 100px;"></div>
+                </div>
+            </section>
+
+            <!-- Hal-hal yang Aku Suka -->
+            <section class="my-16 fade-in delay-6">
+                <h3 class="text-3xl font-bold text-center text-pink-500 mb-8 font-pacifico">Yang Bikin Aku Jatuh Cinta</h3>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                        <div class="bg-pink-500 text-white p-3 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <div><h4 class="font-bold text-lg text-gray-800">Senyumnya</h4><p class="text-gray-600">Yang bisa langsung bikin hariku cerah.</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                         <div class="bg-pink-500 text-white p-3 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.636 5.636a9 9 0 0112.728 0M18 9a3 3 0 11-6 0 3 3 0 016 0z" /></svg></div>
+                        <div><h4 class="font-bold text-lg text-gray-800">Cara Dia Manggil Namaku</h4><p class="text-gray-600">Selalu terdengar spesial dan berbeda.</p></div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                        <div class="bg-pink-500 text-white p-3 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg></div>
+                        <div><h4 class="font-bold text-lg text-gray-800">Perhatian Kecilnya</h4><p class="text-gray-600">Seperti mengingatkanku hal-hal sepele.</p></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4">
+                         <div class="bg-pink-500 text-white p-3 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <div><h4 class="font-bold text-lg text-gray-800">Caranya Manja & Ngambek</h4><p class="text-gray-600">Membuatku ingin selalu menjaganya.</p></div>
+                    </div>
+                     <div class="bg-white p-6 rounded-xl shadow-md flex items-center space-x-4 md:col-span-2">
+                         <div class="bg-pink-500 text-white p-3 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>
+                        <div><h4 class="font-bold text-lg text-gray-800">Dukungannya Saat Aku Down</h4><p class="text-gray-600">Dia selalu jadi orang pertama yang menguatkanku.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Galeri Foto -->
+            <section class="my-16 fade-in delay-7">
+                <h3 class="text-3xl font-bold text-center text-pink-500 mb-8 font-pacifico">Galeri Kenangan Kita</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczOG6agY5WVBzoiyeqvTXfN4_dqHQgd0scPuOJHiJHDO9feNyLjzEIIsnGfKMFAAZMGCn6KXCfuYbzDA00RehX8B4kyG5UfBqNWeGwdK-Zr--LiubH2upbj_1taXl01waJ4Ax0oWTKQinlSZqEKFYmhh6w=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 1" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczNT2Xc56CV6uRDfzrHVmnVooQ8FPmZusaNWg3_iWY9kLHST1GFQd5rc2rJ4ch70Qab8rkJmwqKZQmIPGHVaqHzIhJTTedeTy2rvlqPBwKux75UOqWgZQ7PrwjbRj_AYmhF2oC3YbAh9-oY-j7VVdG6juA=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 2" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczM99F7jF-Fvf39Kej5nrhQLHU74o6VtKR73X8WZcm0Gzknn8S-2iibjij2Vsn9sRTYLr393wQ5kweDiwZ2DZVgK2h2c1l_yiIcyDRRvA1ATqaqulvdoAXrqU5CgiVFCTi0mIH1CwfkiPbfBJ95D60-J3A=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 3" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczPPUq-XLcujmvYJPXTgwkyzHnEahCU4_k3P5NslJIRTx834hXFRPmxxViXYGikqjzPyaRfpihWaMsKkWZlSDVvdwDJLUcT7vcBBb0Axi2JoO5Y0hl2_JXzv7rmtUirFL49BomzPlCzSyFNThdGBQ4Oppw=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 4" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczP-JLvmgsnvze2_sZU-J6POn8PxBKZA76QoDVcZOK6jdXNp1E8RR6DVcVkGK0RNNpmzC5FRsr4Jtj0xeSxlwrx919iBKKhF1cCw8LOZhLyUdOeDiHAhuojAzvqBwbBq_1HkftX5mPmyyBnAThuIgnHWGA=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 5" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                    <img src="https://lh3.googleusercontent.com/pw/AP1GczNAFyjz1qat_7XdFnX6r_UW6zSOeU9C4skriibDQ2OKU_33DyBK4HMvKR7JnCKa0UsT4nsHNxeUfo39kt_F9kvAlNPpKCNJ0yDjTgGOKHkIAI2rFfd-vNQ2ykAfHBOi_bQK7xDyFFMlFPU24spg6ulHHg=w1198-h674-s-no-gm?authuser=0" alt="Kenangan 6" class="rounded-lg shadow-md w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" onclick="showImageModal(this.src)">
+                </div>
+                 <p class="text-center text-sm text-gray-500 mt-4">Klik gambar biar lebih besar ayangg.</p>
+            </section>
+
+            <!-- Footer -->
+            <footer class="text-center mt-16 py-8 border-t border-pink-200">
+                <p class="text-2xl text-pink-500 font-pacifico">Dengan segenap cinta,</p>
+                <p class="text-xl font-bold mt-2">[Ilham Todi Maulana, Pacarmu]</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal untuk menampilkan gambar lebih besar -->
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center p-4 z-50 hidden" onclick="closeImageModal()">
+        <img id="modalImage" src="" alt="Gambar Kenangan" class="max-w-full max-h-full rounded-lg shadow-2xl">
+        <button class="absolute top-4 right-4 text-white text-4xl font-bold">&times;</button>
+    </div>
+
+    <script>
+        // Kontrol untuk layar pembuka dan musik
+        const startButton = document.getElementById('start-button');
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        const mainContent = document.getElementById('main-content');
+
+        // 1. Muat YouTube IFrame Player API secara asynchronous.
+        // PERUBAHAN DI SINI: Link dikembalikan ke yang benar
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 2. Fungsi ini akan membuat <iframe> (dan pemutar YouTube) setelah kode API diunduh.
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: 'e_n5wL4b9cI', // ID Video Penjaga Hati
+                playerVars: {
+                    'playsinline': 1,
+                    'loop': 1,
+                    'playlist': 'e_n5wL4b9cI' // Diperlukan agar loop berfungsi
+                },
+                events: {
+                    // event bisa ditambahkan di sini jika perlu
+                }
+            });
+        }
+
+        // 3. Kontrol Tombol Mulai
+        startButton.addEventListener('click', () => {
+            // Hilangkan layar pembuka dengan efek fade out
+            welcomeOverlay.style.opacity = '0';
+            setTimeout(() => {
+                welcomeOverlay.style.display = 'none';
+            }, 1000); // Waktu harus cocok dengan durasi transisi CSS
+
+            // Tampilkan konten utama
+            mainContent.classList.remove('hidden');
+
+            // Putar video dengan suara setelah user klik
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+                player.unMute();
+            }
+        });
+
+
+        // Modal Gambar (Tetap sama)
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        function showImageModal(src) {
+            modalImage.src = src;
+            modal.classList.remove('hidden');
+        }
+
+        function closeImageModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Fungsi Gemini API (Tetap sama)
+        async function generatePoem() {
+            const button = document.getElementById('gemini-button');
+            const loader = document.getElementById('loader');
+            const outputDiv = document.getElementById('poem-output');
+            loader.classList.remove('hidden');
+            outputDiv.innerHTML = '';
+            button.disabled = true;
+            button.classList.add('opacity-50', 'cursor-not-allowed');
+            const prompt = `Buatkan sebuah puisi ulang tahun yang singkat, manis, dan romantis untuk pacarku bernama Rifa Cansa Larasati, panggil dia Cansa. Hari ini ulang tahunnya yang ke-21. Sampaikan bahwa dia adalah gadis yang unik, kadang manja dan ngambekan tapi sangat menggemaskan, dan dia adalah penjaga hatiku. Buat dalam 3 bait.`;
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                   throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                let poemText = "Maaf, terjadi kesalahan saat membuat puisi. Tapi cintaku padamu tidak pernah salah ❤️";
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                     poemText = result.candidates[0].content.parts[0].text;
+                }
+                outputDiv.innerText = poemText;
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                outputDiv.innerText = "Maaf, puisinya sedang malu-malu untuk muncul. Coba lagi nanti ya! Yang jelas, aku sayang kamu.";
+            } finally {
+                loader.classList.add('hidden');
+                button.disabled = false;
+                button.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+    </script>
+
+</body>
+</html>
